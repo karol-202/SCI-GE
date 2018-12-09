@@ -1,22 +1,12 @@
 #include "Application.hpp"
 
 #include <sci/Logger.hpp>
-
-Application* Application::m_instance = nullptr;
-
-Application* Application::create_instance()
-{
-    if (nullptr == m_instance) {
-        m_instance = new Application();
-        static_cast<Logger&>(*m_instance->m_managers[MenagerType::Logger]).log("Application::create_instance");
-    }
-
-    return m_instance;
-}
+#include <sci/Timer.hpp>
 
 Application::Application()
 {
-    m_managers[MenagerType::Logger] = new Logger();
+    m_managers[ManagerType::Logger] = new Logger(*this);
+    m_managers[ManagerType::Timer] = new Timer(*this);
 
     for (auto manager : m_managers) {
         manager->initialize();
@@ -25,8 +15,9 @@ Application::Application()
 
 Application::~Application()
 {
-    for (auto manager : m_managers) {
+    for (auto& manager : m_managers) {
         manager->terminate();
         delete manager;
+        manager = nullptr;
     }
 }

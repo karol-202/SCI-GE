@@ -1,10 +1,11 @@
 #ifndef ENUMS_HPP
 #define ENUMS_HPP
 
-namespace MenagerType
+namespace ManagerType
 {
     enum Enum {
         Logger,
+        Timer,
         __MAX,
     };
 };
