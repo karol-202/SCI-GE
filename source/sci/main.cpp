@@ -7,6 +7,7 @@ int main(int argc, char* argv[])
     UNUSED(argv)
 
     Application application;
+    application.main_loop();
 
     return 0;
 }

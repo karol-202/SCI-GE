@@ -9,7 +9,7 @@ class Timer final
 {
 public:
     Timer(Application& application);
-    ~Timer() = default;
+    virtual ~Timer() = default;
 
     MANAGER_STATIC_GET_TYPE(ManagerType::Timer)
 
