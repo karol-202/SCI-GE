@@ -8,12 +8,13 @@ class Logger final
     : public Manager
 {
 public:
-    Logger() = default;
+    Logger(Application& application);
     virtual ~Logger() = default;
 
-    virtual MenagerType::Enum get_type() const;
+    MANAGER_STATIC_GET_TYPE(ManagerType::Logger)
 
-    void log(const std::string& msg) const;
+    void log(std::string& msg) const;
+    void log(const std::string& path, int line, const std::string& function, const std::string& msg) const;
 
 protected:
 private:

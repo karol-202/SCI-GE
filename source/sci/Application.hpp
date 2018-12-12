@@ -2,21 +2,33 @@
 #define APPLICATION_HPP
 
 #include <array>
-#include <sci/Manager.hpp>
+#include <sci/Enums.hpp>
+
+class Manager;
 
 class Application final
 {
 public:
-    static Application* create_instance();
-    static Application* get_instance() { return m_instance; }
-
-protected:
     Application();
     ~Application();
 
+    MainLoopStatus::Enum main_loop();
+
+    template<typename T>
+    T& get_manager();
+
+protected:
+
 private:
-    static Application* m_instance;
-    std::array<Manager*, MenagerType::__MAX> m_managers;
+    std::array<Manager*, ManagerType::__MAX> m_managers;
+    MainLoopStatus::Enum m_status;
 };
+
+template<typename T>
+inline T& Application::get_manager()
+{
+    auto manager = m_managers[T::get_type()];
+    return static_cast<T&>(*manager);
+}
 
 #endif

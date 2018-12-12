@@ -1,13 +1,20 @@
 #include "Logger.hpp"
 
 #include <iostream>
+#include <sci/Application.hpp>
 
-MenagerType::Enum Logger::get_type() const
+Logger::Logger(Application& application)
+    : Manager(application)
 {
-    return MenagerType::Logger;
+    MANAGER_LOG("Initialize Logger");
 }
 
-void Logger::log(const std::string& msg) const
+void Logger::log(std::string& msg) const
 {
     std::cout << msg << std::endl;
+}
+
+void Logger::log(const std::string& path, int line, const std::string& function, const std::string& msg) const
+{
+    std::cout << path << ":" << std::to_string(line) << '\t' << function << '\t' << msg << std::endl;
 }
